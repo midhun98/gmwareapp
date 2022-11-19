@@ -1,20 +1,53 @@
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
 from . import models, serializers
-from django.shortcuts import get_object_or_404
+
+
 # Create your views here.
 
-class BrandList(viewsets.ViewSet):
+class BrandList(ModelViewSet):
+    serializer_class = serializers.BrandSerializer
     queryset = models.Brand.objects.all()
 
-    def list(self, request):
-        serializer_class = serializers.BrandSerializer(self.queryset, many=True)
-        print(serializer_class.data)
-        return Response(serializer_class.data)
+    # get a brand based on pk, method - GET
+    def retrieve(self, request, *args, **kwargs):
+        print('retrieve')
+        pk = kwargs.get('pk')
+        try:
+            brand = models.Brand.objects.get(id=pk)
+        except:
+            return Response('Brand doesnt exist')
+        serializer = serializers.BrandSerializer(brand, many=False)
+        return Response({"Message": 'Brand Retrieved', "data": serializer.data})
 
-    def details(self, request, pk=None):
-        post = get_object_or_404(self.queryset, pk)
-        serializer_class = serializers.BrandSerializer(post)
-        return Response(serializer_class.data)
+    # create a new brand, method - POST
+    def create(self, request, *args, **kwargs):
+        print('create')
+        serializer = serializers.BrandSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response({"Message": 'Brand Created', "data": serializer.data})
 
-    def update
+    # update a brand based on primary key and passed data, method - PATCH
+    def update(self, request, *args, **kwargs):
+        print('update')
+        pk = kwargs.get('pk')
+        try:
+            brand = models.Brand.objects.get(id=pk)
+        except:
+            return Response('Brand doesnt exist')
+        serializer = serializers.BrandSerializer(instance=brand, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response({"Message": 'Brand Updated', "data": serializer.data})
+
+    # delete a brand based on the passed pk, method - DELETE
+    def destroy(self, request, *args, **kwargs):
+        print("destroy")
+        pk = kwargs.get('pk')
+        try:
+            brand = models.Brand.objects.get(id=pk)
+        except:
+            return Response('Brand doesnt exist')
+        brand.delete()
+        return Response({"Message": 'Brand deleted'})
