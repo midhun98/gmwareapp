@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %} All Brands {% endblock title %}
+{% block content %}
+
+    <style>
+        label {
+            color: LightGray;
+        }
+
+        input {
+            width: 30px;
+
+        }
+
+        .dataTables_info {
+            color: white;
+        }
+
+        a {
+            color: royalblue;
+        }
+
+        p {
+            color: black;
+        }
+
+        td {
+            color: white;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <div class="table-responsive">
+        <table id="example" class="table table-hover table-striped table-dark">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Created at</th>
+                <th>Market Place</th>
+                <th>Zip code</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="myTable">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function deleteBrand(id) {
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'http://127.0.0.1:8000/api/' + id
+                    swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                } else {
+                    swal.fire("Your  Data is safe!");
+                }
+            })
+        }
+
+        {# fetch all the brands by calling the api#}
+        buildList()
+
+        function buildList() {
+            var wrapper = document.getElementById('myTable')
+            var url = 'http://127.0.0.1:8000/api/'
+            fetch(url)
+                .then((resp) => resp.json())
+                .then(function (data) {
+                    var list = data
+                    for (var i = 0; i < list.length; i++) {
+                        var row = `<tr>
+                            <td>${list[i].name}</td>
+                            <td>${list[i].created_at}</td>
+                            <td>${list[i].market_place}</td>
+                            <td>${list[i].zip_code}</td>
+                            <td>
+                                <button class="btn btn-danger" onclick="deleteBrand(${list[i].id})">Delete</button>
+                            </td>
+                        </tr>`
+                        wrapper.innerHTML += row;
+                    }
+                })
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+{% endblock %}
