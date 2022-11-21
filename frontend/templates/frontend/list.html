@@ -48,7 +48,7 @@
         </table>
     </div>
     {% for i in brand %}
-        <div class="modal fade" id="exampleModal-{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -213,7 +213,7 @@
                             <td>${list[i].zip_code}</td>
                             <td>
                                 <button class="btn btn-danger" onclick="deleteItem(${list[i].id})">Delete</button>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-${list[i].id}"
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                         onclick="editBrand(${list[i].id})">Edit
                                 </button>
                             </td>
