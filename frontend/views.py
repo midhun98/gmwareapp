@@ -23,6 +23,15 @@ def createBrand(request):
         "market": market,
         "zipcode": zipcode
     }
+    if request.POST:
+        name = request.POST.get('name')
+        market = request.POST.get('market')
+        zip = request.POST.get('zip')
+        image = request.POST.get('image')
+        models.Brand.objects.create(name=name,
+                                    market_place=models.MarketPlace.objects.get(id=market),
+                                    zip_code=models.ZipCode.objects.get(id=zip),
+                                    image=image)
     return render(request, 'frontend/create_brand.html', context)
 
 @csrf_exempt

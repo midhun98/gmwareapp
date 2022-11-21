@@ -53,7 +53,8 @@
             var formData = new FormData(e.target);
             e.preventDefault();
             $.ajax({
-                url: "api/",
+                {#url: "api/",#}
+                url: "create-brand",
                 type: "POST",
                 data: formData,
                 processData: false,

@@ -19,7 +19,7 @@ class ZipCode(models.Model):
 
 
 class Brand(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=True, blank=True)
     image = models.ImageField(upload_to='brand_images/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True)
     market_place = models.ForeignKey(MarketPlace, on_delete=models.CASCADE, null=True, blank=True)
