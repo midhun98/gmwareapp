@@ -47,6 +47,66 @@
             </tbody>
         </table>
     </div>
+    {% for i in brand %}
+        <div class="modal fade" id="exampleModal-{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="color: black;">{{ i.name }}, id
+                            = {{ i.id }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: black">{{ i.created_at }}</p>
+                    </div>
+                    <form id="post-form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name
+                                        <input type="text" name="name" class="form-control">
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Upload
+                                        <input type="file" name="image" class="form-control">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Market </label>
+                                    <select class="select form-control" name="market">
+                                        {% for i in market %}
+                                            <option value="{{ i.id }}">{{ i.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Zipcode</label>
+                                    <select class="select form-control" name="zip">
+                                        {% for i in zipcode %}
+                                            <option value="{{ i.id }}">{{ i.code }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary" id='submitButton'>Edit Brand</button>
+                        </div>
+                    </form>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 
     <script>
         function getCookie(name) {
@@ -66,6 +126,7 @@
 
         {#var csrftoken = getCookie('csrftoken');#}
         csrftoken = '{{ csrf_token }}'
+        var activeItem = null
 
 
         function deleteBrand(id) {
@@ -79,7 +140,6 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    {#window.location.href = 'http://127.0.0.1:8000/api/' + id#}
                     swal.fire(
                         'Deleted!',
                         'Your file has been deleted.',
@@ -110,6 +170,31 @@
             })
         }
 
+        function editBrand(item) {
+            $(document).ready(function () {
+                $('#post-form').submit(function (i) {
+                    i.preventDefault();
+                    var serializedData = $(this).serializeArray();
+                    console.log(serializedData);
+                    $.ajax({
+                        method: 'POST',
+                        url: '/update-brand/' + item,
+                        data: serializedData,
+                        success: function (response) {
+                            $("#post_form").trigger('reset');
+                            swal.fire('Updated');
+                            setTimeout(function () {
+                                window.location.href = "/"
+                            }, 2000);
+                        },
+                        error: function (response) {
+                            alert(response["responseJSON"]["error"]);
+                        }
+                    })
+                })
+            })
+        }
+
         {# fetch all the brands by calling the api#}
         buildList()
 
@@ -128,6 +213,9 @@
                             <td>${list[i].zip_code}</td>
                             <td>
                                 <button class="btn btn-danger" onclick="deleteItem(${list[i].id})">Delete</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-${list[i].id}"
+                                        onclick="editBrand(${list[i].id})">Edit
+                                </button>
                             </td>
                         </tr>`
                         wrapper.innerHTML += row;
