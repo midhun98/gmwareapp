@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %} Create Brand {% endblock title %}
+{% block content %}
+
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Brand</h4>
+                <form id="post-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Name
+                                    <input type="text" name="name" class="form-control">
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Upload
+                                    <input type="file" name="image" class="form-control">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Market </label>
+                                <select class="select form-control" name="market">
+                                    {% for i in market %}
+                                        <option value="{{ i.id }}">{{ i.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Zipcode</label>
+                                <select class="select form-control" name="zip">
+                                    {% for i in zipcode %}
+                                        <option value="{{ i.id }}">{{ i.code }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-primary" id='submitButton'>Add Brand</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#post-form').submit(function (e) {
+            var formData = new FormData(e.target);
+            e.preventDefault();
+            $.ajax({
+                url: "api/",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                mimeType: "multipart/form-data",
+                success: function () {
+                    swal.fire("Created!");
+                    setTimeout(function () {
+                        window.location.href = "/"
+                    }, 2000);
+                }
+            });
+        })
+    </script>
+
+{% endblock %}
