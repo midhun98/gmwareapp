@@ -49,21 +49,23 @@
     </div>
 
     <script>
-		function getCookie(name) {
-		    var cookieValue = null;
-		    if (document.cookie && document.cookie !== '') {
-		        var cookies = document.cookie.split(';');
-		        for (var i = 0; i < cookies.length; i++) {
-		            var cookie = cookies[i].trim();
-		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-		                break;
-		            }
-		        }
-		    }
-		    return cookieValue;
-		}
-		var csrftoken = getCookie('csrftoken');
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
         function deleteBrand(id) {
             swal.fire({
                 title: 'Are you sure?',
@@ -80,11 +82,11 @@
                         'Deleted!',
                         'Your file has been deleted.',
                         'success'
-                    ).then(function() {
-                    var url = 'delete-brand/'+id
-                    fetch(url)
-                    window.location.reload();
-                    console.log('delete');
+                    ).then(function () {
+                        var url = 'delete-brand/' + id
+                        fetch(url)
+                        window.location.reload();
+                        console.log('delete');
                     });
                 } else {
                     swal.fire("Your  Data is safe!");
@@ -92,19 +94,20 @@
             })
         }
 
-        function deleteItem(item){
-			console.log('Delete clicked'+item)
-			fetch(`http://127.0.0.1:8000/api/${item}/`, {
-				method:'DELETE',
-				headers:{
-					'Content-type':'application/json',
-					'X-CSRFToken':csrftoken,
-				}
-			}).then((response) => {
+        function deleteItem(item) {
+            console.log('Delete clicked' + item)
+            fetch(`http://127.0.0.1:8000/api/${item}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+            }).then((response) => {
                 swal.fire('Deleted!');
-				window.location.reload();
-			})
-		}
+                window.location.reload();
+            })
+        }
+
         {# fetch all the brands by calling the api#}
         buildList()
 
