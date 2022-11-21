@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+
 from core import models
 # Create your views here.
 
@@ -14,3 +16,8 @@ def createBrand(request):
         "zipcode": zipcode
     }
     return render(request, 'frontend/create_brand.html', context)
+
+# @csrf_exempt
+# def deleteBrand(request,pk):
+#     models.Brand.objects.filter(id=pk).delete()
+#     return render(request, 'frontend/list.html')
