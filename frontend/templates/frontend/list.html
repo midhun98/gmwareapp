@@ -64,7 +64,9 @@
             return cookieValue;
         }
 
-        var csrftoken = getCookie('csrftoken');
+        {#var csrftoken = getCookie('csrftoken');#}
+        csrftoken = '{{ csrf_token }}'
+
 
         function deleteBrand(id) {
             swal.fire({
