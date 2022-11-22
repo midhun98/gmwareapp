@@ -51,3 +51,59 @@ class BrandList(ModelViewSet):
             return Response('Brand doesnt exist')
         brand.delete()
         return Response({"Message": 'Brand deleted'})
+
+
+class ContentList(ModelViewSet):
+    queryset = models.Content.objects.all()
+    serializer_class = serializers.ContentSerializer
+
+    # get a content  based on pk, method - GET
+    def retrieve(self, request, *args, **kwargs):
+        print('content retrieve')
+        pk = kwargs.get('pk')
+        try:
+            brand = models.Content.objects.get(id=pk)
+        except:
+            return Response('Content doesnt exist')
+        serializer = self.serializer_class(brand, many=False)
+        return Response({"Message": 'Content Retrieved', "data": serializer.data})
+
+    # create a new content, method - POST
+    def create(self, request, *args, **kwargs):
+        print('content create')
+        serializer = self.serializer_class(data=request.data)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"Message": 'Content Created', "data": serializer.data})
+        else:
+            return Response({"Error": serializer.errors})
+
+    # update a content based on primary key and passed data, method - PATCH
+    def update(self, request, *args, **kwargs):
+        print('content update')
+        pk = kwargs.get('pk')
+        print(pk)
+        try:
+            brand = models.Content.objects.get(id=pk)
+        except:
+            return Response('Content doesnt exist')
+        serializer = self.serializer_class(instance=brand, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+            return Response({"Message": 'Content Updated', "data": serializer.data})
+        else:
+            return Response({"Error": serializer.errors})
+
+
+    # delete a content based on the passed pk, method - DELETE
+    def destroy(self, request, *args, **kwargs):
+        print("content destroy")
+        pk = kwargs.get('pk')
+        try:
+            brand = models.Content.objects.get(id=pk)
+        except:
+            return Response('content doesnt exist')
+        brand.delete()
+        return Response({"Message": 'Content deleted'})
