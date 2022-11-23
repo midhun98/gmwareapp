@@ -162,7 +162,6 @@
 
         function buildTable(data) {
             var table = document.getElementById('list-cards')
-            var modal_data = document.getElementById('list-modal')
             for (i in data) {
                 {# JSON.stringify to convert object object to json format then covert it to dict #}
                 channel_dict = JSON.stringify(data[i]['channel'])
@@ -175,8 +174,10 @@
                 }
                 try {
                     marketplace_dict_img = JSON.parse(marketplace_dict).logo
+                    marketplace_dict_name = JSON.parse(marketplace_dict).name
                 } catch (err) {
                     marketplace_dict_img = "No market Image"
+                    marketplace_dict_name = "No market name"
                 }
                 try {
                     brands_dict_img = JSON.parse(brands_dict).image
@@ -189,8 +190,11 @@
                                    <img class="card-img-bottom two" src="${marketplace_dict_img}" alt="No market Image" style="width: 10rem;" >
                                    <img class="card-img-bottom two" src="${brands_dict_img}" alt="No Brand Image" style="width: 10rem;" >
                                    <h5 class="card-title" style="color: black">${data[i].name}</h5>
+                                   <p class="card-text"><span><b>Content</b></span></p>
+
                                    <p class="card-text">${data[i].subject}</p>
                                    <p class="card-text"><span><b>Channel Name: </b></span> ${channel_dict_name}</p>
+                                   <p class="card-text"><span><b>Market Name: </b></span> ${marketplace_dict_name}</p>
                                </div>
                                <div>
                                    <button class="btn btn-danger" onclick="deleteItem(${data[i].id})">Delete</button>
