@@ -37,6 +37,23 @@
     </div>
 
     <script>
+
+        csrftoken = '{{ csrf_token }}'
+
+        function deleteItem(item) {
+            console.log('Delete clicked' + item)
+            fetch(`api/content/${item}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+            }).then((response) => {
+                swal.fire('Deleted!');
+                window.location.reload();
+            })
+        }
+
         var myArray = []
 
         $.ajax({
@@ -53,12 +70,21 @@
             for (i in data) {
                 {# JSON.stringify to convert object object to json format then covert it to dict #}
                 channel_dict = JSON.stringify(data[i]['channel'])
+                try {
+                    channel_dict_name = JSON.parse(channel_dict).name
+                } catch (err) {
+                    channel_dict_name = "No channel"
+                }
                 var row = `<div class="card">
                                <div class="card-body">
-                                   <img class="card-img-bottom" src="${data[i].image}" alt="Card image cap" width="100" height="200">
+                                   <img class="card-img-bottom" src="${data[i].image}" alt="No image" width="100" height="200">
                                    <h5 class="card-title" style="color: black">${data[i].name}</h5>
                                    <p class="card-text">${data[i].subject}</p>
-                                   <p class="card-text"><small class="text-muted">${JSON.parse(channel_dict).name}</small></p>
+                                   <p class="card-text"><small class="text-muted">${channel_dict_name}</small></p>
+                               </div>
+                               <div>
+                                   <button class="btn btn-danger" onclick="deleteItem(${data[i].id})">Delete</button>
+                                   </button>
                                </div>
                            </div>`
 
