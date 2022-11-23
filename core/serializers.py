@@ -34,8 +34,18 @@ class BrandSerializer(serializers.ModelSerializer):
 
 class ContentSerializer(serializers.ModelSerializer):
     # channel = ChannelSerializer()
+    marketplace_pk = serializers.PrimaryKeyRelatedField(
+        queryset=models.MarketPlace.objects.all(), source='marketplace', write_only=True
+    )
+    brand_pk = serializers.PrimaryKeyRelatedField(
+        queryset=models.Brand.objects.all(), source='brands', write_only=True
+    )
+    channel_pk = serializers.PrimaryKeyRelatedField(
+        queryset=models.Channel.objects.all(), source='channel', write_only=True
+    )
 
     class Meta:
         model = models.Content
-        fields = '__all__'
+        fields = ['id','name', 'subject', 'marketplace', 'image', 'channel', 'brands', 'marketplace_pk','brand_pk',
+                  'channel_pk']
         depth = 1
