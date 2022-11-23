@@ -157,7 +157,7 @@
 
         function deleteItem(item) {
             console.log('Delete clicked' + item)
-            fetch(`http://127.0.0.1:8000/api/${item}/`, {
+            fetch(`http://127.0.0.1:8000/api/brands/${item}/`, {
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
@@ -199,7 +199,7 @@
 
         function buildList() {
             var wrapper = document.getElementById('myTable')
-            var url = 'http://127.0.0.1:8000/api/'
+            var url = 'http://127.0.0.1:8000/api/brands/'
             fetch(url)
                 .then((resp) => resp.json())
                 .then(function (data) {

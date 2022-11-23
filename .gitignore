@@ -2,6 +2,7 @@
 *.pot
 *.pyc
 *.js
+*.jpg
 staticfiles/
 core/migrations/
 core/__pycache__/

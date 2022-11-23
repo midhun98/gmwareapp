@@ -5,4 +5,6 @@ from .import models
 admin.site.register(models.MarketPlace)
 admin.site.register(models.ZipCode)
 admin.site.register(models.Brand)
+admin.site.register(models.Content)
+admin.site.register(models.Channel)
 
