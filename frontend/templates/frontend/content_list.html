@@ -36,19 +36,6 @@
     <div class="row" id="list-cards">
     </div>
 
-    <table class="table">
-        <tr class="bg-info">
-            <th>Channel</th>
-            <th>Last</th>
-            <th>Email</th>
-        </tr>
-
-        <tbody id="myTable">
-
-        </tbody>
-    </table>
-
-
     <script>
         var myArray = []
 
@@ -62,14 +49,19 @@
         })
 
         function buildTable(data) {
-            var table = document.getElementById('myTable')
+            var table = document.getElementById('list-cards')
             for (i in data) {
-                dict = JSON.stringify(data[i]['channel'])
-                var row = `<tr>
-							<td>${JSON.parse(dict).name}</td>
-							<td>${data[i].name}</td>
-							<td>${data[i].name}</td>
-					  </tr>`
+                {# JSON.stringify to convert object object to json format then covert it to dict #}
+                channel_dict = JSON.stringify(data[i]['channel'])
+                var row = `<div class="card">
+                               <div class="card-body">
+                                   <img class="card-img-bottom" src="${data[i].image}" alt="Card image cap" width="100" height="200">
+                                   <h5 class="card-title" style="color: black">${data[i].name}</h5>
+                                   <p class="card-text">${data[i].subject}</p>
+                                   <p class="card-text"><small class="text-muted">${JSON.parse(channel_dict).name}</small></p>
+                               </div>
+                           </div>`
+
                 table.innerHTML += row
             }
         }
