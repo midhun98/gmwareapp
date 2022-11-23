@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} All Brands {% endblock title %}
+{% block title %} Contents {% endblock title %}
 {% block content %}
 
     <style>
@@ -33,6 +33,75 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 
+    <div class="modal" tabindex="-1" role="dialog" id="modal-form">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: black;">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="post-form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name
+                                        <input type="text" name="name" class="form-control">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Subject
+                                        <input type="text" name="subject" class="form-control">
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Upload Image
+                                        <input type="file" name="image" class="form-control">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Market</label>
+                                    <select class="select form-control" name="market">
+                                        {% for i in market %}
+                                            <option value="{{ i.id }}">{{ i.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Channel</label>
+                                    <select class="select form-control" name="channel">
+                                        {% for i in channel %}
+                                            <option value="{{ i.id }}">{{ i.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Brands</label>
+                                    <select class="select form-control" name="brand">
+                                        {% for i in brands %}
+                                            <option value="{{ i.id }}">{{ i.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary" id='submitButton'>Update Content</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row" id="list-cards">
     </div>
 
@@ -54,6 +123,32 @@
             })
         }
 
+
+        function editBrand(item) {
+            $(document).ready(function () {
+                $('#post-form').submit(function (i) {
+                    i.preventDefault();
+                    var serializedData = $(this).serializeArray();
+                    console.log(serializedData);
+                    $.ajax({
+                        method: 'POST',
+                        url: '/update-content/' + item,
+                        data: serializedData,
+                        success: function (response) {
+                            $("#post_form").trigger('reset');
+                            swal.fire('Updated');
+                            setTimeout(function () {
+                                window.location.href = "content-list"
+                            }, 2000);
+                        },
+                        error: function (response) {
+                            alert(response["responseJSON"]["error"]);
+                        }
+                    })
+                })
+            })
+        }
+
         var myArray = []
 
         $.ajax({
@@ -67,6 +162,7 @@
 
         function buildTable(data) {
             var table = document.getElementById('list-cards')
+            var modal_data = document.getElementById('list-modal')
             for (i in data) {
                 {# JSON.stringify to convert object object to json format then covert it to dict #}
                 channel_dict = JSON.stringify(data[i]['channel'])
@@ -94,11 +190,13 @@
                                    <img class="card-img-bottom two" src="${brands_dict_img}" alt="No Brand Image" style="width: 10rem;" >
                                    <h5 class="card-title" style="color: black">${data[i].name}</h5>
                                    <p class="card-text">${data[i].subject}</p>
-                                   <p class="card-text"><small class="text-muted">${channel_dict_name}</small></p>
+                                   <p class="card-text"><span><b>Channel Name: </b></span> ${channel_dict_name}</p>
                                </div>
                                <div>
                                    <button class="btn btn-danger" onclick="deleteItem(${data[i].id})">Delete</button>
                                    </button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-form"
+                                        onclick="editBrand(${data[i].id})">Edit</button>
                                </div>
                            </div>`
 

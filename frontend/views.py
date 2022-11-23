@@ -50,7 +50,15 @@ def updateBrand(request, pk):
 
 
 def contentList(request):
-    return render(request, 'frontend/content_list.html')
+    market = models.MarketPlace.objects.all()
+    channel = models.Channel.objects.all()
+    brands = models.Brand.objects.all()
+    context = {
+        "market": market,
+        "channel": channel,
+        "brands": brands
+    }
+    return render(request, 'frontend/content_list.html', context)
 
 def createContent(request):
     market = models.MarketPlace.objects.all()
@@ -76,3 +84,15 @@ def createContent(request):
                                     image=image)
 
     return render(request, 'frontend/create_content.html', context)
+
+@csrf_exempt
+def updateContent(request, pk):
+    name = request.POST.get('name')
+    subject = request.POST.get('subject')
+    market = request.POST.get('market')
+    image = request.POST.get('image')
+    channel = request.POST.get('channel')
+    brand = request.POST.get('brand')
+    models.Content.objects.filter(id=pk).update(name=name, subject=subject, image=image,marketplace =market,
+                                                channel= channel,brands= brand)
+    return render(request, 'frontend/list.html')
