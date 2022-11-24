@@ -110,12 +110,12 @@
             console.log('Delete clicked' + item)
             $.ajax({
                 method: 'DELETE',
-                url: 'api/content/'+item+'/',
+                url: 'api/content/' + item + '/',
                 headers: {
                     'Content-type': 'application/json',
                     'X-CSRFToken': csrftoken,
                 },
-                success: function(){
+                success: function () {
                     swal.fire('Deleted!');
                     window.location.reload();
                 }
@@ -190,7 +190,6 @@
                                    <img class="card-img-bottom two" src="${brands_dict_img}" alt="No Brand Image" style="width: 10rem;" >
                                    <h5 class="card-title" style="color: black">${data[i].name}</h5>
                                    <p class="card-text"><span><b>Content</b></span></p>
-
                                    <p class="card-text">${data[i].subject}</p>
                                    <p class="card-text"><span><b>Channel Name: </b></span> ${channel_dict_name}</p>
                                    <p class="card-text"><span><b>Market Name: </b></span> ${marketplace_dict_name}</p>
