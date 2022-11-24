@@ -108,15 +108,17 @@
 
         function deleteItem(item) {
             console.log('Delete clicked' + item)
-            fetch(`api/content/${item}/`, {
+            $.ajax({
                 method: 'DELETE',
+                url: 'api/content/'+item+'/',
                 headers: {
                     'Content-type': 'application/json',
                     'X-CSRFToken': csrftoken,
+                },
+                success: function(){
+                    swal.fire('Deleted!');
+                    window.location.reload();
                 }
-            }).then((response) => {
-                swal.fire('Deleted!');
-                window.location.reload();
             })
         }
 
