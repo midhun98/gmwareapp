@@ -37,7 +37,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color: black;">Modal title</h5>
+                    <h5 class="modal-title" style="color: black;">Update</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -96,9 +96,6 @@
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>
@@ -111,15 +108,17 @@
 
         function deleteItem(item) {
             console.log('Delete clicked' + item)
-            fetch(`api/content/${item}/`, {
+            $.ajax({
                 method: 'DELETE',
+                url: 'api/content/' + item + '/',
                 headers: {
                     'Content-type': 'application/json',
                     'X-CSRFToken': csrftoken,
+                },
+                success: function () {
+                    swal.fire('Deleted!');
+                    window.location.reload();
                 }
-            }).then((response) => {
-                swal.fire('Deleted!');
-                window.location.reload();
             })
         }
 
@@ -191,7 +190,6 @@
                                    <img class="card-img-bottom two" src="${brands_dict_img}" alt="No Brand Image" style="width: 10rem;" >
                                    <h5 class="card-title" style="color: black">${data[i].name}</h5>
                                    <p class="card-text"><span><b>Content</b></span></p>
-
                                    <p class="card-text">${data[i].subject}</p>
                                    <p class="card-text"><span><b>Channel Name: </b></span> ${channel_dict_name}</p>
                                    <p class="card-text"><span><b>Market Name: </b></span> ${marketplace_dict_name}</p>
