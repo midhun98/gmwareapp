@@ -116,7 +116,7 @@
                 },
                 success: function () {
                     swal.fire('Deleted!');
-                    window.location.reload();
+                    $("#list-cards" + item).hide();
                 }
             })
         }
@@ -191,7 +191,8 @@
                 } catch (err) {
                     brands_dict_img = "No market Image"
                 }
-                var row = `<div class="card">
+                var row = `<div id=list-cards${data[i].id}>
+                            <div class="card">
                                <div class="card-body">
                                    <img class="card-img-bottom two" src="${data[i].image}" alt="No image" style="width: 30rem;" >
                                    <img class="card-img-bottom two" src="${marketplace_dict_img}" alt="No market Image" style="width: 10rem;" >
@@ -208,7 +209,9 @@
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                         onclick="editBrand(${data[i].id})">Edit</button>
                                </div>
-                           </div>`
+                           </div>
+                           </div>
+`
 
                 table.innerHTML += row
             }
