@@ -33,14 +33,13 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 
-    <div class="modal" tabindex="-1" role="dialog" id="modal-form">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color: black;">Update</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Update</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="post-form">
@@ -123,6 +122,16 @@
         }
 
         function editBrand(item) {
+            $.ajax({
+                url: 'api/content/' + item + '/',
+                type: "GET",
+                success: function (response) {
+                    $('#name').val(response.data.name);
+                    $('#subject').val(response.data.subject);
+                    $('#image').val(response.data.image);
+                }
+            })
+
             $('#post-form').submit(function (e) {
                 var formData = new FormData(e.target);
                 e.preventDefault();
@@ -193,7 +202,7 @@
                                <div>
                                    <button class="btn btn-danger" onclick="deleteItem(${data[i].id})">Delete</button>
                                    </button>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-form"
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                         onclick="editBrand(${data[i].id})">Edit</button>
                                </div>
                            </div>`
