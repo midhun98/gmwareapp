@@ -72,7 +72,6 @@ class ContentList(ModelViewSet):
     def create(self, request, *args, **kwargs):
         print('content create')
         serializer = self.serializer_class(data=request.data)
-        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response({"Message": 'Content Created', "data": serializer.data})
