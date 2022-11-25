@@ -82,7 +82,6 @@ class ContentList(ModelViewSet):
     def update(self, request, *args, **kwargs):
         print('content update')
         pk = kwargs.get('pk')
-        print(pk)
         try:
             brand = models.Content.objects.get(id=pk)
         except:

@@ -48,12 +48,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name
-                                        <input type="text" name="name" class="form-control">
+                                        <input type="text" name="name" id="form_name" class="form-control">
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label>Subject
-                                        <input type="text" name="subject" class="form-control">
+                                        <input type="text" name="subject" id="form_subject" class="form-control">
                                     </label>
                                 </div>
 
@@ -126,9 +126,8 @@
                 url: 'api/content/' + item + '/',
                 type: "GET",
                 success: function (response) {
-                    $('#name').val(response.data.name);
-                    $('#subject').val(response.data.subject);
-                    $('#image').val(response.data.image);
+                    $('#form_name').val(String(response.data.name));
+                    $('#form_subject').val(String(response.data.subject));
                 }
             })
 
