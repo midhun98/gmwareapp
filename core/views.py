@@ -90,7 +90,6 @@ class ContentList(ModelViewSet):
         serializer = self.serializer_class(instance=brand, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            print(serializer.data)
             return Response({"Message": 'Content Updated', "data": serializer.data})
         else:
             return Response({"Error": serializer.errors})
