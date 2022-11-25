@@ -129,6 +129,9 @@
                     $('#form_name').val(String(response.data.name));
                     $('#form_subject').val(String(response.data.subject));
                     $('#form_image').attr('href', String(response.data.image));
+                    $('#channel_pk').val(String(response.data.channel.id));
+                    $('#marketplace_pk').val(String(response.data.marketplace.id));
+                    $('#brand_pk').val(String(response.data.brands.id));
                 }
             })
 
