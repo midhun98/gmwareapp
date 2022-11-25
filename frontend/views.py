@@ -69,20 +69,6 @@ def createContent(request):
         "channel": channel,
         "brands": brands
     }
-    if request.POST:
-        print(request.POST)
-        name = request.POST.get('name')
-        subject = request.POST.get('subject')
-        market = request.POST.get('market')
-        image = request.POST.get('image')
-        channel = request.POST.get('channel')
-        brand = request.POST.get('brand')
-        models.Content.objects.create(name=name, subject=subject,
-                                    marketplace=models.MarketPlace.objects.get(id=market),
-                                    brands=models.Brand.objects.get(id=brand),
-                                    channel=models.Channel.objects.get(id=channel),
-                                    image=image)
-
     return render(request, 'frontend/create_content.html', context)
 
 @csrf_exempt
