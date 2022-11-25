@@ -58,15 +58,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Upload Image
-                                        <input type="file" name="image" class="form-control">
-                                    </label>
+                                    <label>Upload Image</label>
+                                    <a href="" id="form_image">Image</a>
+                                    <input type="file" name="image" id="image" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Market</label>
-                                    <select class="select form-control" name="market">
+                                    <select class="select form-control" name="marketplace_pk" id="marketplace_pk">
                                         {% for i in market %}
                                             <option value="{{ i.id }}">{{ i.name }}</option>
                                         {% endfor %}
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Channel</label>
-                                    <select class="select form-control" name="channel">
+                                    <select class="select form-control" name="channel_pk" id="channel_pk">
                                         {% for i in channel %}
                                             <option value="{{ i.id }}">{{ i.name }}</option>
                                         {% endfor %}
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Brands</label>
-                                    <select class="select form-control" name="brand">
+                                    <select class="select form-control" name="brand_pk" id="brand_pk">
                                         {% for i in brands %}
                                             <option value="{{ i.id }}">{{ i.name }}</option>
                                         {% endfor %}
@@ -128,6 +128,7 @@
                 success: function (response) {
                     $('#form_name').val(String(response.data.name));
                     $('#form_subject').val(String(response.data.subject));
+                    $('#form_image').attr('href', String(response.data.image));
                 }
             })
 

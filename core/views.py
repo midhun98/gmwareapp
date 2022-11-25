@@ -71,6 +71,7 @@ class ContentList(ModelViewSet):
     # create a new content, method - POST
     def create(self, request, *args, **kwargs):
         print('content create')
+        print(request.data)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -81,6 +82,7 @@ class ContentList(ModelViewSet):
     # update a content based on primary key and passed data, method - PATCH
     def update(self, request, *args, **kwargs):
         print('content update')
+        print(request.data)
         pk = kwargs.get('pk')
         try:
             brand = models.Content.objects.get(id=pk)
