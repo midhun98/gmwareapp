@@ -30,7 +30,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Market</label>
-                                <select class="select form-control" name="market">
+                                <select class="select form-control" name="marketplace_pk">
                                     {% for i in market %}
                                         <option value="{{ i.id }}">{{ i.name }}</option>
                                     {% endfor %}
@@ -38,7 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Channel</label>
-                                <select class="select form-control" name="channel">
+                                <select class="select form-control" name="channel_pk">
                                     {% for i in channel %}
                                         <option value="{{ i.id }}">{{ i.name }}</option>
                                     {% endfor %}
@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Brands</label>
-                                <select class="select form-control" name="brand">
+                                <select class="select form-control" name="brand_pk">
                                     {% for i in brands %}
                                         <option value="{{ i.id }}">{{ i.name }}</option>
                                     {% endfor %}
@@ -66,7 +66,7 @@
             var formData = new FormData(e.target);
             e.preventDefault();
             $.ajax({
-                url: "create-content",
+                url: "api/content/",
                 type: "POST",
                 data: formData,
                 processData: false,
