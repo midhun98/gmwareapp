@@ -31,6 +31,7 @@
                             <div class="form-group">
                                 <label>Market</label>
                                 <select class="select form-control" name="marketplace_pk">
+                                    <option value="">--------</option>
                                     {% for i in market %}
                                         <option value="{{ i.id }}">{{ i.name }}</option>
                                     {% endfor %}
@@ -39,6 +40,7 @@
                             <div class="form-group">
                                 <label>Channel</label>
                                 <select class="select form-control" name="channel_pk">
+                                    <option value="">--------</option>
                                     {% for i in channel %}
                                         <option value="{{ i.id }}">{{ i.name }}</option>
                                     {% endfor %}
@@ -47,6 +49,7 @@
                             <div class="form-group">
                                 <label>Brands</label>
                                 <select class="select form-control" name="brand_pk">
+                                    <option value="">--------</option>
                                     {% for i in brands %}
                                         <option value="{{ i.id }}">{{ i.name }}</option>
                                     {% endfor %}
