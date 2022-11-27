@@ -126,7 +126,7 @@ function buildTable(data) {
         }
         var row = `<div id=list-cards${data[i].id}>
                            <div class="card">
-                               <div class="card-body">
+                               <div class="card-body" id=list-cards-${data[i].id}>
                                    <img class="card-img-bottom two" src="${data[i].image}" alt="No image" style="width: 30rem;" >
                                    <img class="card-img-bottom two" src="${marketplace_dict_img}" alt="No market Image" style="width: 10rem;" >
                                    <img class="card-img-bottom two" src="${brands_dict_img}" alt="No Brand Image" style="width: 10rem;" >
