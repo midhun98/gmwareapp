@@ -42,8 +42,8 @@ class Content(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     subject = models.CharField(max_length=1000, null=True, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
-    brands = models.ForeignKey(Brand, null=True, on_delete=models.SET_NULL, related_name='content_brand')
-    marketplace = models.ForeignKey(MarketPlace, null=True, on_delete=models.SET_NULL, related_name='content_marketplace')
+    brands = models.ForeignKey(Brand, null=True, blank=True, on_delete=models.SET_NULL, related_name='content_brand')
+    marketplace = models.ForeignKey(MarketPlace, null=True, blank=True, on_delete=models.SET_NULL, related_name='content_marketplace')
     channel = models.ForeignKey(Channel, null=True, blank=True, on_delete=models.SET_NULL, related_name='content_channel')
 
     def __str__(self):
