@@ -1,7 +1,6 @@
 *.log
 *.pot
 *.pyc
-*.js
 *.jpg
 staticfiles/
 core/migrations/
