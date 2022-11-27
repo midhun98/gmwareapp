@@ -34,13 +34,13 @@ class BrandSerializer(serializers.ModelSerializer):
 
 class ContentSerializer(serializers.ModelSerializer):
     # channel = ChannelSerializer()
-    marketplace_pk = serializers.PrimaryKeyRelatedField(
+    marketplace_pk = serializers.PrimaryKeyRelatedField(allow_null=True,
         queryset=models.MarketPlace.objects.all(), source='marketplace', write_only=True, required=False
     )
-    brand_pk = serializers.PrimaryKeyRelatedField(
+    brand_pk = serializers.PrimaryKeyRelatedField(allow_null=True,
         queryset=models.Brand.objects.all(), source='brands', write_only=True, required=False
     )
-    channel_pk = serializers.PrimaryKeyRelatedField(
+    channel_pk = serializers.PrimaryKeyRelatedField(allow_null=True,
         queryset=models.Channel.objects.all(), source='channel', write_only=True, required=False
     )
 
