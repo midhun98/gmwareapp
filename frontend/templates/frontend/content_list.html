@@ -60,11 +60,11 @@
                                     </label>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Upload Image</label>
-                                    <a href="" id="form_image">Image</a>
-                                    <input type="file" name="image" id="image" class="form-control">
-                                </div>
+{#                                <div class="form-group">#}
+{#                                    <label>Upload Image</label>#}
+{#                                    <a href="" id="form_image">Image</a>#}
+{#                                    <input type="file" name="image" id="image" class="form-control">#}
+{#                                </div>#}
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="text-end mt-4">
-                            <button type="submit" class="btn btn-primary" id='submitButton'>Update Content</button>
+                            <button type="submit" class="btn btn-primary" id='submitButton' onclick="editBrand()">Update Content</button>
                         </div>
                     </form>
                 </div>
@@ -131,7 +131,7 @@
                 success: function (response) {
                     $('#form_name').val(String(response.data.name));
                     $('#form_subject').val(String(response.data.subject));
-                    $('#form_image').attr('href', String(response.data.image));
+                    {#$('#form_image').attr('href', String(response.data.image));#}
                     $('#channel_pk').val(String(response.data.channel.id));
                     $('#marketplace_pk').val(String(response.data.marketplace.id));
                     $('#brand_pk').val(String(response.data.brands.id));
